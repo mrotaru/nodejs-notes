@@ -68,3 +68,5 @@ console.log(require.main === module) // true
 - `npm ls -g --depth=0`
 - if no operator is specified for a dep in `package.json`, default is `=` (see: https://docs.npmjs.com/misc/semver#ranges)
 - caret ranges are a bit weird - only allow updates that do not modify the left-most non-zero digit (https://docs.npmjs.com/misc/semver#caret-ranges-123-025-004)
+- `npm repo lodash`
+- `npm home lodash`
