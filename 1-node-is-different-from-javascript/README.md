@@ -1,5 +1,5 @@
-- `node -p 'process.versoins.v8'
-- `node --v8-options | grep "in progress"
+- `node -p 'process.versoins.v8`
+- `node --v8-options | grep "in progress`
 - interesting v8 options: `--expose-gc`, `--trace-gc`
 - can set v8 options at runtime: `v8.setFlagsFromString`
 - node deps: `libuv`, `http-parser`, `c-ares`, `OpenSSL`, `zlib`
@@ -7,7 +7,7 @@
 ---
 
 - when running the node repl, core modules are pre-loaded - which is not the case in script mode
-- core modules - I think it's the stuff in `/lib`: https://github.com/nodejs/node/tree/master/lib
+- core modules - it's the stuff in `/lib`: https://github.com/nodejs/node/tree/master/lib (https://nodejs.org/api/modules.html#modules_core_modules)
 - install `rlwrap` to use reverse search: `NODE_NO_READLINE=1 rlwrap node`
 - `_` is the result of the last executed command
 - `.help` - dot commands: `break`, `clear`, `editor`, `help`, `load`, `save`
@@ -36,4 +36,28 @@ const buffer = Buffer.from('touché') // length: 7
 ```
 - `Buffer.from`: [./buffers.js](./buffers.js)
 
+---
 
+- **`require` is sync**
+- module loading algorithm: https://nodejs.org/api/modules.html#modules_all_together
+- modules are cached after first load; unless resolves to a different file, same obj is returned
+- `exports` object cannot be used inside timers
+- more on cycles: https://nodejs.org/api/modules.html#modules_cycles
+
+---
+
+- when using `require`, it will wrap the file with a function
+- https://nodejs.org/api/modules.html#modules_the_module_wrapper
+- **exports, module** are not globals; they are args passed to the wrapper function by node
+- `exports` is just a reference to `module.exports`:
+```js
+console.log(exports === require.main.exports) // true
+console.log(exports === module.exports) // true
+console.log(require.main === module) // true
+```
+- that's why assigning directly to `exports` has no effect on the exported value
+- `require.main` is the initial module: https://github.com/nodejs/node/blob/master/lib/internal/module.js#L23
+- node gives each module it's own `module` and `exports` (via the wrapper) but `require` is the same
+- so if the initial module (`require.main`) is the same as the `module` passed by the wrapper, we know the file was run as a script
+- see: [./add-foo.js](./add-foo.js)
+- we can override `require` and our version will be passed to all subsequently loaded modules
