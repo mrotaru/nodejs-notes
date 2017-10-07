@@ -48,7 +48,7 @@ const buffer = Buffer.from('touché') // length: 7
 
 - when using `require`, it will wrap the file with a function
 - https://nodejs.org/api/modules.html#modules_the_module_wrapper
-- **exports, module** are not globals; they are args passed to the wrapper function by node
+- **`exports`, `module` are not globals**; they are args passed to the wrapper function by node
 - `exports` is just a reference to `module.exports`:
 ```js
 console.log(exports === require.main.exports) // true
@@ -57,7 +57,14 @@ console.log(require.main === module) // true
 ```
 - that's why assigning directly to `exports` has no effect on the exported value
 - `require.main` is the initial module: https://github.com/nodejs/node/blob/master/lib/internal/module.js#L23
-- node gives each module it's own `module` and `exports` (via the wrapper) but `require` is the same
+- **node gives each module it's own `module` and `exports` (via the wrapper) but `require` is the same**
 - so if the initial module (`require.main`) is the same as the `module` passed by the wrapper, we know the file was run as a script
 - see: [./add-foo.js](./add-foo.js)
 - we can override `require` and our version will be passed to all subsequently loaded modules
+
+---
+
+- `npm i --dry-run express`
+- `npm ls -g --depth=0`
+- if no operator is specified for a dep in `package.json`, default is `=` (see: https://docs.npmjs.com/misc/semver#ranges)
+- caret ranges are a bit weird - only allow updates that do not modify the left-most non-zero digit (https://docs.npmjs.com/misc/semver#caret-ranges-123-025-004)
