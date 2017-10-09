@@ -1,0 +1,6 @@
+- event loop base premise: most waste comes from waiting for I/O ops to complete
+- threads: overhead, sharing is complex (nginx vs apache)
+- event loop: converts external events into callback invocations
+- event loop: picks events from the event queue and pushes their callbacks onto the call stack
+- js is single threaded, so only one stack, and can only do one thing at a time
+- stack frame: fn, args, local vars
