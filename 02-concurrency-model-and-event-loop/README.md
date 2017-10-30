@@ -1,6 +1,15 @@
 - event loop base premise: most waste comes from waiting for I/O ops to complete
-- threads: overhead, sharing is complex (nginx vs apache)
 - event loop: converts external events into callback invocations
 - event loop: picks events from the event queue and pushes their callbacks onto the call stack
+- threads: overhead, sharing is complex (nginx vs apache)
 - js is single threaded, so only one stack, and can only do one thing at a time
+- recently, a multithreaded JS runtime was published by Microsoft: https://github.com/Microsoft/napajs
+- the environment (node, browser, etc) provides functions such as `setTimeout`; these are not part of JS
+- such functions are handled outside of normal JS execution
+- the env can push events onto the queue (DOM events, file system events, timers)
+- the event loop will push the callbacks associated with the events onto the stack and they will get executed
+- event loop: `while (!eventQueue.isEmpty()) { run(eventQueue.pop()) }`
 - stack frame: fn, args, local vars
+- `setImmediate` cbs execute before `setTimeout(0)`
+- **`process.nextTick` is not part of the event loop** (https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/#process-nexttick)
+- https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/
