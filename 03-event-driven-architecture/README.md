@@ -1,0 +1,8 @@
+- https://nodejs.org/dist/latest-v9.x/docs/api/events.html
+- when an event is emitted, event handlers are called **synchronously**
+- can register handlers with `on` or with `once`
+- if an `error` event is emitted but there are no handlers, it will be trhown as an exception - which means the stack trace will be printed, and `node` will crash
+- to avoid that, it is best practice to **always register handlers for `error`**
+- by default, max 10 handlers can be registered for an event; can change with `emitter.setMaxListeners(100)`
+- to change the max for all `EventEmitter` instances, use `EventEmitter.defaultMaxListeners = 100`
+- https://nodejs.org/api/process.html#process_event_uncaughtexception
