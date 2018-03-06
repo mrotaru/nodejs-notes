@@ -1,0 +1,1 @@
+- a node server (created with `createServer`) will automatically create a new socket for each `connection`
