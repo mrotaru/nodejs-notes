@@ -2,18 +2,22 @@
 
 const server = require('net').createServer()
 let counter = 0
+let sockets = []
 
 server.on('connection', socket => {
   socket.id = counter++
+  sockets.push(socket)
   console.log(`client connected (${socket.id})`)
   socket.write(`Welcome, client #${socket.id} !\n`)
 
   socket.on('data', data => {
-    socket.write(`${socket.id}: `)
-    socket.write(data)
+    sockets
+      .filter(_socket => _socket.id !== socket.id)
+      .map(_socket => _socket.write(`${_socket.id}: ${data}`))
   })
   socket.on('end', () => {
-    console.log('client disconnected')
+    sockets = sockets.filter(s => s.id !== socket.id)
+    console.log(`client ${socket.id} disconnected; remaining clients: ${sockets.length}`)
   })
 })
 
