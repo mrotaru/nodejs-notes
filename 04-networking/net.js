@@ -6,14 +6,18 @@ let sockets = []
 
 server.on('connection', socket => {
   socket.id = counter++
-  sockets.push(socket)
   console.log(`client connected (${socket.id})`)
-  socket.write(`Welcome, client #${socket.id} !\n`)
+  socket.write(`Welcome, please type a name !\n`)
 
   socket.on('data', data => {
-    sockets
-      .filter(_socket => _socket.id !== socket.id)
-      .map(_socket => _socket.write(`${_socket.id}: ${data}`))
+    if (!sockets.find(s => s.id === socket.id)) {
+      socket.name = data.toString('utf8').trim()
+      sockets.push(socket)
+    } else {
+      sockets
+        .filter(_socket => _socket.id !== socket.id)
+        .map(_socket => _socket.write(`${socket.name}: ${data}`))
+    }
   })
   socket.on('end', () => {
     sockets = sockets.filter(s => s.id !== socket.id)
