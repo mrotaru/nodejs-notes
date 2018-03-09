@@ -1,0 +1,4 @@
+- https://nodejs.org/dist/latest-v9.x/docs/api/http.html
+- the node HTTP interfaces are very low-level
+- if using `httpie` to test streaming servers, add `--stream` (https://httpie.org/doc#streamed-responses)
+- 
