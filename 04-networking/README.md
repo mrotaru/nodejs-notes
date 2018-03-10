@@ -1,4 +1,13 @@
-- a node server (created with `createServer`) will automatically create a new socket for each `connection`
+## Server
+- https://nodejs.org/dist/latest-v9.x/docs/api/net.html#net_class_net_server
+- will automatically create a new socket for each `connection`
+- events: `close`, `connection`, `error`, `listening`
+
+## Socket
+- https://nodejs.org/dist/latest-v9.x/docs/api/net.html#net_class_net_socket
+- duplex stream
+- sockets (eg, as returned from `createConnection`) can be used to directly communicate with servers
+- events: `close`, `connect`, `data`, `drain`, `end`, `error`, `lookup`, `timeout`
 
 ## DNS
 - https://nodejs.org/api/dns.html
