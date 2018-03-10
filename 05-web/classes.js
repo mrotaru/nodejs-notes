@@ -10,8 +10,10 @@ server.on('request', (req, res) => {
 // the above is equivalent to:
 // const server = http.createServer((req, res) => {})
 
-const req = http.request('www.google.com', res => { // req: http.ClientRequest
+const req = http.request('www.google.com', res => {
+  // req: http.ClientRequest
   // res: http.IncomingMessage
-  res.on('data', chunk => { // IncomingMessage implements Readable Stream, hence 'data' event
+  res.on('data', chunk => {
+    // IncomingMessage implements Readable Stream, hence 'data' event
   })
 })
