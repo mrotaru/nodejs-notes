@@ -1,5 +1,5 @@
-- `node -p 'process.versoins.v8`
-- `node --v8-options | grep "in progress`
+- NodeJS embeds the [V8 JavaScript engine](https://v8.dev/); `node -p 'process.versions.v8'` to see V8 version
+- `node --v8-options | grep "in progress"`
 - interesting v8 options: `--expose-gc`, `--trace-gc`
 - can set v8 options at runtime: `v8.setFlagsFromString`
 - node deps: `libuv`, `http-parser`, `c-ares`, `OpenSSL`, `zlib`
